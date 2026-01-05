@@ -1,0 +1,62 @@
+[package]
+name = "fcm_recv"
+version = "0.1.0"
+edition = "2021"
+
+[dependencies]
+# FCM
+fcm_receiver_rs = "0.1.1"
+
+# Async runtime
+tokio = { version = "1", features = ["full"] }
+
+# Web framework
+axum = { version = "0.7", features = ["macros"] }
+tower = { version = "0.4" }
+tower-http = { version = "0.5", features = ["cors", "trace"] }
+
+# Serialization
+serde = { version = "1", features = ["derive"] }
+serde_json = "1"
+
+# Database
+sqlx = { version = "0.7", features = ["runtime-tokio-native-tls", "sqlite", "chrono"] }
+
+# HTTP client for webhooks
+reqwest = { version = "0.11", features = ["json"] }
+
+# Logging
+tracing = "0.1"
+tracing-subscriber = { version = "0.3", features = ["env-filter"] }
+
+# Error handling
+anyhow = "1"
+thiserror = "1"
+
+# UUID
+uuid = { version = "1", features = ["v4", "serde"] }
+
+# Environment
+dotenv = "0.15"
+
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+futures = "0.3"
+rand = "0.8"
+
+# OpenAPI / Swagger
+utoipa = { version = "4", features = ["axum_extras", "chrono"] }
+utoipa-swagger-ui = { version = "6", features = ["axum"] }
+
+# For test_notification binary (JWT signing)
+rsa = "0.9"
+sha2 = { version = "0.10", features = ["oid"] }
+base64 = "0.21"
+
+[[bin]]
+name = "fcm_recv"
+path = "src/main.rs"
+
+[[bin]]
+name = "test_notification"
+path = "src/bin/test_notification.rs"
