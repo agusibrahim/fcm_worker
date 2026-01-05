@@ -53,6 +53,9 @@ rsa = "0.9"
 sha2 = { version = "0.10", features = ["oid"] }
 base64 = "0.21"
 
+# Force vendored OpenSSL to fix cross-compilation (statics linking)
+openssl = { version = "0.10", features = ["vendored"] }
+
 [[bin]]
 name = "fcm_recv"
 path = "src/main.rs"
