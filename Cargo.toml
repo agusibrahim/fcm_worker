@@ -55,6 +55,7 @@ base64 = "0.21"
 
 # Force vendored OpenSSL to fix cross-compilation (statics linking)
 openssl = { version = "0.10", features = ["vendored"] }
+openssl-sys = { version = "0.9", features = ["vendored"] }
 
 [[bin]]
 name = "fcm_recv"
