@@ -23,7 +23,7 @@ A Firebase Cloud Messaging (FCM) Multi-Credential Receiver Server written in Rus
 ### Build from Source
 
 ```bash
-git clone https://github.com/yourusername/fcm_recv.git
+git clone https://github.com/agusibrahim/fcm_recv.git
 cd fcm_recv
 cargo build --release
 ```
@@ -94,8 +94,10 @@ POST   /api/messages/{id}/retry   # Retry webhook delivery
 
 ## How It Works
 
+This project is powered by [fcm_receiver.rs](https://github.com/agusibrahim/fcm_receiver.rs), a Rust library for receiving FCM push notifications by emulating an Android device.
+
 1. **Register Credentials** - Add Firebase project credentials via the API
-2. **Start Listener** - The server registers as a virtual Android device and connects to FCM
+2. **Start Listener** - The server registers as a virtual Android device and connects to FCM using `fcm_receiver.rs`
 3. **Receive Messages** - When a push notification is sent to the registered device, the server receives it
 4. **Forward to Webhook** - The message is forwarded to your configured webhook URL
 5. **Persistence** - All messages are logged in the SQLite database for later reference
