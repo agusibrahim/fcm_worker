@@ -11,42 +11,34 @@ env:
   BINARY_NAME: fcm_recv
 
 jobs:
-  # Linux builds using cross (handles OpenSSL properly)
+  # Linux build (native)
   build-linux:
-    name: Build Linux ${{ matrix.arch }}
+    name: Build Linux
     runs-on: ubuntu-latest
-    strategy:
-      fail-fast: false
-      matrix:
-        include:
-          - target: x86_64-unknown-linux-gnu
-            arch: amd64
-          - target: aarch64-unknown-linux-gnu
-            arch: arm64
 
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Install dependencies
+        run: sudo apt-get update && sudo apt-get install -y libssl-dev pkg-config
+
       - name: Install Rust toolchain
         uses: dtolnay/rust-toolchain@stable
 
-      - name: Install cross
-        run: cargo install cross --version 0.2.5
-
-      - name: Build with cross
-        run: cross build --release --target ${{ matrix.target }}
+      - name: Build
+        run: cargo build --release
 
       - name: Rename binary
         run: |
           mkdir -p dist
-          cp target/${{ matrix.target }}/release/${{ env.BINARY_NAME }} dist/${{ env.BINARY_NAME }}-linux-${{ matrix.arch }}
+          cp target/release/${{ env.BINARY_NAME }} dist/${{ env.BINARY_NAME }}-linux-amd64
 
       - name: Upload artifact
         uses: actions/upload-artifact@v4
         with:
-          name: ${{ env.BINARY_NAME }}-linux-${{ matrix.arch }}
-          path: dist/${{ env.BINARY_NAME }}-linux-${{ matrix.arch }}
+          name: ${{ env.BINARY_NAME }}-linux-amd64
+          path: dist/${{ env.BINARY_NAME }}-linux-amd64
 
   # macOS builds (native)
   build-macos:
